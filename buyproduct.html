@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stackly</title>
+
+<style>
+
+/* ===== RESET ===== */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI, sans-serif;
+}
+
+/* ===== PAGE LOADER ===== */
+#page-loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:#0b1220;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:9999;
+}
+
+/* DNA LOADER */
+.dna-loader{
+position:relative;
+width:120px;
+height:120px;
+}
+
+.dna-loader span{
+position:absolute;
+width:12px;
+height:12px;
+background:#ff1e1e;
+border-radius:50%;
+animation:dna 1.6s linear infinite;
+}
+
+.dna-loader span:nth-child(1){top:0;left:50%;animation-delay:0s;}
+.dna-loader span:nth-child(2){top:20px;left:80%;animation-delay:.1s;}
+.dna-loader span:nth-child(3){top:50px;left:100%;animation-delay:.2s;}
+.dna-loader span:nth-child(4){top:80px;left:80%;animation-delay:.3s;}
+.dna-loader span:nth-child(5){top:100px;left:50%;animation-delay:.4s;}
+.dna-loader span:nth-child(6){top:80px;left:20%;animation-delay:.5s;}
+.dna-loader span:nth-child(7){top:50px;left:0%;animation-delay:.6s;}
+.dna-loader span:nth-child(8){top:20px;left:20%;animation-delay:.7s;}
+
+@keyframes dna{
+0%{transform:scale(.6);opacity:.3;}
+50%{transform:scale(1.4);opacity:1;background:#ff1e1e;}
+100%{transform:scale(.6);opacity:.3;}
+}
+
+.loader-text{
+color:white;
+margin-top:20px;
+font-size:18px;
+letter-spacing:2px;
+}
+
+/* ===== NAVBAR ===== */
+.navbar{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 40px;
+height:70px;
+background:#0b1220;
+color:#fff;
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+/* LOGO */
+.logo img{
+width:180px;
+height:100px;
+}
+
+/* DESKTOP LINKS */
+.nav-links{
+display:flex;
+gap:30px;
+}
+
+.nav-links a{
+color:#cfd3dc;
+text-decoration:none;
+font-size:16px;
+transition:.3s;
+}
+
+.nav-links a:hover{
+color:white;
+}
+
+/* BUTTONS */
+.nav-buttons{
+display:flex;
+gap:12px;
+}
+
+.login{
+background:transparent;
+border:1px solid #aaa;
+color:white;
+padding:8px 16px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.start{
+background:#ff1e1e;
+border:none;
+color:white;
+padding:9px 18px;
+border-radius:6px;
+cursor:pointer;
+font-weight:600;
+}
+
+/* HAMBURGER */
+.hamburger{
+display:none;
+flex-direction:column;
+gap:5px;
+cursor:pointer;
+}
+
+.hamburger span{
+width:26px;
+height:3px;
+background:white;
+display:block;
+}
+
+/* MOBILE MENU */
+.mobile-menu{
+position:fixed;
+top:0;
+right:-100%;
+width:100%;
+height:100vh;
+background:#0b1220;
+padding:25px 22px;
+transition:0.4s ease;
+z-index:2000;
+overflow-y:auto;
+}
+
+.mobile-menu.active{
+right:0;
+}
+
+.mobile-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.close{
+background:none;
+border:none;
+color:white;
+font-size:24px;
+cursor:pointer;
+}
+
+.mobile-buttons{
+display:flex;
+gap:10px;
+margin-bottom:25px;
+}
+
+.mobile-links a{
+display:block;
+padding:14px 0;
+border-bottom:1px solid #1f2a44;
+color:#cfd3dc;
+text-decoration:none;
+font-size:16px;
+}
+
+/* OVERLAY */
+.overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.55);
+opacity:0;
+visibility:hidden;
+transition:.3s;
+z-index:1500;
+}
+
+.overlay.active{
+opacity:1;
+visibility:visible;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+
+.nav-links,
+.nav-buttons{
+display:none;
+}
+
+.hamburger{
+display:flex;
+}
+
+.navbar{
+padding:14px 20px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- PAGE LOADER -->
+<div id="page-loader">
+
+<div class="dna-loader">
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+<div class="loader-text">Loading Medical services...</div>
+
+</div>
+
+<!-- NAVBAR -->
+<header class="navbar">
+
+<div class="logo">
+<img src="stacklylogo (1).webp">
+</div>
+
+<nav class="nav-links">
+<a href="index.html">Home</a>
+<a href="buyproduct.html">Buy Medicals</a>
+<a href="services.html">Services</a>
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+</nav>
+
+<div class="nav-buttons">
+<a href="login.html"><button class="login">Login</button></a>
+<a href="getstarted.html"><button class="start">Get Started</button></a>
+</div>
+
+<div class="hamburger" id="hamburger">
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+
+<div class="mobile-top">
+<div class="logo"><img src="stacklylogo (1).webp" height="35"></div>
+<button class="close" id="closeMenu">✕</button>
+</div>
+
+<div class="mobile-buttons">
+<a href="login.html"><button class="login">Login</button></a>
+<a href="getstarted.html"><button class="start">Get Started</button></a>
+</div>
+
+<nav class="mobile-links">
+<a href="index.html">Home</a>
+<a href="buyproduct.html">Buy Medicals</a>
+<a href="services.html">Services</a>
+<a href="about.html">About</a>
+
+<a href="contact.html">Contact</a>
+</nav>
+
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<script>
+
+/* PAGE LOADER */
+window.addEventListener("load", function(){
+setTimeout(function(){
+document.getElementById("page-loader").style.display="none";
+},2000);
+});
+
+/* MENU */
+const hamburger = document.getElementById("hamburger");
+const mobileMenu = document.getElementById("mobileMenu");
+const closeMenu = document.getElementById("closeMenu");
+const overlay = document.getElementById("overlay");
+
+hamburger.onclick = () => {
+mobileMenu.classList.add("active");
+overlay.classList.add("active");
+}
+
+closeMenu.onclick = () => {
+mobileMenu.classList.remove("active");
+overlay.classList.remove("active");
+}
+
+overlay.onclick = () => {
+mobileMenu.classList.remove("active");
+overlay.classList.remove("active");
+}
+
+</script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* Background Video */
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    /* Dark Overlay for better text visibility */
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(0,0,0,0.65), rgba(0,0,0,0.8));
+      z-index: 1;
+    }
+
+    /* Hero Content */
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      padding: 0 20px;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      color: white;
+    }
+
+    .hero h1 span {
+      color: #e31b23;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: rgba(255,255,255,0.9);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Button Styles */
+    .hero-buttons {
+      display: flex;
+      gap: 1.2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 32px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #e31b23;
+      color: #000000;
+      box-shadow: 0 4px 15px rgba(227,27,35,0.3);
+    }
+
+    .btn-primary:hover {
+      background: #b01017;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(227,27,35,0.4);
+      color: white;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #e31b23;
+      color: #e31b23;
+    }
+
+    .btn-outline:hover {
+      background: #e31b23;
+      color: #000000;
+      transform: translateY(-3px);
+    }
+
+    /* Scroll Indicator (optional) */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      text-align: center;
+      animation: bounce 2s infinite;
+      cursor: pointer;
+    }
+
+    .scroll-indicator .mouse {
+      width: 26px;
+      height: 42px;
+      border: 2px solid white;
+      border-radius: 20px;
+      margin: 0 auto 8px;
+      position: relative;
+    }
+
+    .scroll-indicator .mouse::before {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 8px;
+      background: white;
+      border-radius: 2px;
+      animation: scrollWheel 1.5s infinite;
+    }
+
+    .scroll-indicator span {
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scrollWheel {
+      0% { transform: translateX(-50%) translateY(0); opacity: 1; }
+      100% { transform: translateX(-50%) translateY(15px); opacity: 0; }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      .btn {
+        width: 80%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <!-- Background Video -->
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="6973-197914400_medium.mp4" type="video/mp4">
+      <!-- Fallback video URL - works and is reliable -->
+      <source src="6973-197914400_medium.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <h1>24X7, <span>Our Priority</span></h1>
+      <p>Medical Services is dedicated to providing high-quality healthcare with experienced doctors</p>
+      <div class="hero-buttons">
+        <a href="404.html" class="btn btn-primary">Book Appointment <i class="fas fa-arrow-right"></i></a>
+        <a href="404.html" class="btn btn-outline">Emergency Care <i class="fas fa-ambulance"></i></a>
+      </div>
+    </div>
+
+    <div class="scroll-indicator" onclick="window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })">
+      <div class="mouse"></div>
+      <span>Scroll Down</span>
+    </div>
+  </section>
+
+  <!-- Simple fallback for video autoplay -->
+  <script>
+    // Ensure video plays on mobile (autoplay policies)
+    const video = document.querySelector('.hero-video');
+    if (video) {
+      video.play().catch(() => {
+        // Autoplay prevented, add click listener to play
+        document.body.addEventListener('click', () => video.play(), { once: true });
+      });
+    }
+  </script>
+</body>
+</html>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #1f1f1f; }
+    ::-webkit-scrollbar-thumb { background: #e31b23; border-radius: 3px; }
+    
+    /* Cart drawer animation */
+    .cart-drawer {
+      transition: transform 0.3s ease-in-out;
+      transform: translateX(100%);
+    }
+    .cart-drawer.open {
+      transform: translateX(0);
+    }
+    /* Product card hover effect */
+    .product-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px -5px rgba(227,27,35,0.2);
+    }
+    /* Quantity button */
+    .qty-btn {
+      transition: all 0.2s;
+    }
+    .qty-btn:hover {
+      background-color: #e31b23;
+      color: black;
+    }
+    /* Overlay for mobile when drawer open */
+    .drawer-overlay {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s;
+    }
+    .drawer-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+  </style>
+</head>
+<body class="bg-black text-white font-sans">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-30 bg-black/95 backdrop-blur border-b border-red-600/30 px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-2">
+      <i class="fas fa-capsules text-2xl text-red-600"></i>
+      <span class="text-xl font-bold">Medi<span class="text-red-600">Store</span></span>
+    </div>
+    <button id="cartIconBtn" class="relative text-white hover:text-red-600 transition">
+      <i class="fas fa-shopping-cart text-2xl"></i>
+      <span id="cartCountBadge" class="absolute -top-2 -right-3 bg-red-600 text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+    </button>
+  </header>
+
+  <!-- Products Grid -->
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <h1 class="text-3xl md:text-4xl font-bold text-center mb-2">Medical Essentials</h1>
+    <p class="text-center text-gray-400 mb-10">Trusted healthcare products for your wellness</p>
+    <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <!-- Products injected via JS -->
+    </div>
+  </main>
+
+  <!-- Cart Drawer (Sidebar) -->
+  <div id="drawerOverlay" class="drawer-overlay fixed inset-0 bg-black/70 z-40"></div>
+  <div id="cartDrawer" class="cart-drawer fixed top-0 right-0 w-full sm:w-96 h-full bg-zinc-900 shadow-2xl z-50 flex flex-col border-l border-red-600/30">
+    <div class="flex justify-between items-center p-5 border-b border-red-600/30">
+      <h2 class="text-xl font-bold">Your Cart</h2>
+      <button id="closeCartBtn" class="text-gray-400 hover:text-red-600 text-2xl">&times;</button>
+    </div>
+    <div id="cartItemsList" class="flex-1 overflow-y-auto p-4 space-y-4">
+      <!-- Cart items will appear here -->
+      <div class="text-center text-gray-400 py-8">Your cart is empty</div>
+    </div>
+    <div class="border-t border-red-600/30 p-5">
+      <div class="flex justify-between text-lg font-bold mb-4">
+        <span>Total:</span>
+        <span id="cartTotal">$0.00</span>
+      </div>
+      <button id="checkoutBtn" class="w-full bg-red-600 text-black py-3 rounded-full font-bold hover:bg-red-700 transition">Checkout →</button>
+    </div>
+  </div>
+
+  <script>
+    // ---------- PRODUCT DATA (20 medical items) ----------
+    const products = [
+      { id: 1, name: "Baby Lotion", price: 24.99, image: "pharma1.webp" },
+      { id: 2, name: "Baby Dove Cream", price: 49.99, image: "pharma2.webp" },
+      { id: 3, name: "Mama Earth", price: 29.99, image: "pharma3.webp" },
+      { id: 4, name: "First Aid Kit", price: 19.99, image: "pharma4.webp" },
+      { id: 5, name: "N95 Masks (10pcs)", price: 14.99, image: "pharma5.webp" },
+      { id: 6, name: "Hand Sanitizer (500ml)", price: 8.99, image: "pharma6.webp" },
+      { id: 7, name: "Digital Weighing Scale", price: 34.99, image: "pharma7.webp" },
+      { id: 8, name: "Nebulizer Machine", price: 59.99, image: "pharma8.webp" },
+      { id: 9, name: "Heating Pad", price: 27.99, image: "pharma9.webp" },
+      { id: 10, name: "Wrist Blood Pressure Monitor", price: 39.99, image: "pharma10.webp" },
+      { id: 11, name: "Medical Stethoscope", price: 44.99, image: "pharma11.webp" },
+      { id: 12, name: "Infrared Forehead Thermometer", price: 36.99, image: "pharma12.webp" },
+      { id: 13, name: "Knee Support Brace", price: 22.99, image: "pharma13.webp" },
+      { id: 14, name: "Pill Organizer", price: 9.99, image: "pharma14.webp" },
+      { id: 16, name: "Surgical Gloves (100pcs)", price: 12.99, image: "pharma16.webp" },
+      { id: 17, name: "Infrared Massager", price: 79.99, image: "pharma17.webp" },
+      { id: 18, name: "Posture Corrector", price: 29.99, image: "pharma18.webp" },
+      { id: 19, name: "Digital Baby Scale", price: 49.99, image: "pharma19.webp" },
+      { id: 20, name: "Humidifier", price: 42.99, image: "pharma10.webp" }
+    ];
+
+    // Cart state: { id, quantity }
+    let cart = [];
+
+    // DOM elements
+    const productsGrid = document.getElementById('productsGrid');
+    const cartItemsList = document.getElementById('cartItemsList');
+    const cartTotalSpan = document.getElementById('cartTotal');
+    const cartCountBadge = document.getElementById('cartCountBadge');
+    const cartDrawer = document.getElementById('cartDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+    const closeCartBtn = document.getElementById('closeCartBtn');
+    const cartIconBtn = document.getElementById('cartIconBtn');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+
+    // Helper: Save cart to localStorage
+    function saveCart() {
+      localStorage.setItem('medicalCart', JSON.stringify(cart));
+    }
+
+    // Helper: Load cart from localStorage
+    function loadCart() {
+      const saved = localStorage.getItem('medicalCart');
+      if (saved) {
+        cart = JSON.parse(saved);
+      } else {
+        cart = [];
+      }
+      updateCartUI();
+    }
+
+    // Add product to cart
+    function addToCart(productId) {
+      const existing = cart.find(item => item.id === productId);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ id: productId, quantity: 1 });
+      }
+      saveCart();
+      updateCartUI();
+      // Optional: flash feedback
+    }
+
+    // Remove item from cart
+    function removeFromCart(productId) {
+      cart = cart.filter(item => item.id !== productId);
+      saveCart();
+      updateCartUI();
+    }
+
+    // Update quantity (increase/decrease)
+    function updateQuantity(productId, delta) {
+      const item = cart.find(i => i.id === productId);
+      if (item) {
+        const newQty = item.quantity + delta;
+        if (newQty <= 0) {
+          removeFromCart(productId);
+        } else {
+          item.quantity = newQty;
+          saveCart();
+          updateCartUI();
+        }
+      }
+    }
+
+    // Get product details by id
+    function getProductById(id) {
+      return products.find(p => p.id === id);
+    }
+
+    // Update entire cart UI (drawer, badge, total)
+    function updateCartUI() {
+      // Update badge
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCountBadge.textContent = totalItems;
+      
+      // Render cart items list
+      if (cart.length === 0) {
+        cartItemsList.innerHTML = '<div class="text-center text-gray-400 py-8">Your cart is empty</div>';
+        cartTotalSpan.textContent = '$0.00';
+        return;
+      }
+      
+      let cartHtml = '';
+      let total = 0;
+      cart.forEach(item => {
+        const product = getProductById(item.id);
+        if (!product) return;
+        const itemTotal = product.price * item.quantity;
+        total += itemTotal;
+        cartHtml += `
+          <div class="flex gap-3 border-b border-gray-800 pb-3">
+            <img src="${product.image}" class="w-16 h-16 object-cover rounded-lg" alt="${product.name}">
+            <div class="flex-1">
+              <h4 class="font-semibold text-sm">${product.name}</h4>
+              <div class="text-red-600 text-sm">$${product.price.toFixed(2)}</div>
+              <div class="flex items-center gap-2 mt-2">
+                <button class="qty-btn w-7 h-7 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-black transition" onclick="updateQuantity(${item.id}, -1)">-</button>
+                <span class="text-sm w-6 text-center">${item.quantity}</span>
+                <button class="qty-btn w-7 h-7 rounded-full border border-red-600 text-red-600 hover:bg-red-600 hover:text-black transition" onclick="updateQuantity(${item.id}, 1)">+</button>
+                <button class="ml-auto text-gray-400 hover:text-red-600 text-sm" onclick="removeFromCart(${item.id})"><i class="fas fa-trash-alt"></i></button>
+              </div>
+            </div>
+            <div class="text-right text-sm font-semibold">$${itemTotal.toFixed(2)}</div>
+          </div>
+        `;
+      });
+      cartItemsList.innerHTML = cartHtml;
+      cartTotalSpan.textContent = `$${total.toFixed(2)}`;
+    }
+
+    // Open cart drawer
+    function openCart() {
+      cartDrawer.classList.add('open');
+      drawerOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close cart drawer
+    function closeCart() {
+      cartDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Render product grid (20 items)
+    function renderProducts() {
+      productsGrid.innerHTML = products.map(product => `
+        <div class="product-card bg-zinc-900 rounded-xl overflow-hidden border border-gray-800 hover:border-red-600 transition-all">
+          <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+          <div class="p-4">
+            <h3 class="font-bold text-lg mb-1">${product.name}</h3>
+            <p class="text-red-600 font-bold text-xl">$${product.price.toFixed(2)}</p>
+            <div class="flex gap-2 mt-4">
+              <button onclick="addToCart(${product.id})" class="flex-1 bg-red-600 text-black py-2 rounded-full text-sm font-semibold hover:bg-red-700 transition">Add to Cart</button>
+              <button onclick="window.location.href='404.html'" class="flex-1 border border-red-600 text-red-600 py-2 rounded-full text-sm font-semibold hover:bg-red-600 hover:text-black transition">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Checkout: go to 404 only if cart has items
+    function handleCheckout() {
+      if (cart.length > 0) {
+        window.location.href = '404.html';
+      } else {
+        alert('Your cart is empty. Add items before checking out.');
+      }
+    }
+
+    // Event listeners
+    cartIconBtn.addEventListener('click', openCart);
+    closeCartBtn.addEventListener('click', closeCart);
+    drawerOverlay.addEventListener('click', closeCart);
+    checkoutBtn.addEventListener('click', handleCheckout);
+
+    // Initialize
+    loadCart();
+    renderProducts();
+
+    // Make functions global for onclick from dynamic HTML
+    window.addToCart = addToCart;
+    window.updateQuantity = updateQuantity;
+    window.removeFromCart = removeFromCart;
+  </script>
+
+  <section class="medical-ad-section">
+  <div class="medical-ad-container">
+
+    <div class="medical-ad-image">
+      <div class="medical-ad-shape"></div>
+
+      <img src="pharma11.webp" alt="Medical Service">
+
+      <div class="medical-ad-badge">
+        Trusted Medical Care
+      </div>
+    </div>
+
+    <div class="medical-ad-content">
+      <span class="medical-ad-tag">Medical Services</span>
+
+      <h2>World-Class Care for Your Health</h2>
+
+      <p>
+        At our medical center, quality healthcare is affordable and accessible.
+        Our experienced doctors and advanced facilities provide complete care,
+        including consultation, treatment, emergency services, and recovery support.
+      </p>
+
+      <div class="medical-ad-buttons">
+        <a href="404.html" class="medical-btn primary-btn">
+          Book Appointment
+        </a>
+
+        <a href="404.html" class="medical-btn secondary-btn">
+          Learn More →
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+.medical-ad-section{
+  width:100%;
+  background:#f3f3f3;
+  padding:90px 20px;
+  overflow:hidden;
+  font-family:'Poppins',sans-serif;
+}
+
+.medical-ad-container{
+  max-width:1300px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:70px;
+}
+
+.medical-ad-image{
+  position:relative;
+  width:100%;
+}
+
+.medical-ad-shape{
+  position:absolute;
+  top:-20px;
+  left:30px;
+  width:80%;
+  height:100%;
+  background:#ff1e1e;
+  clip-path:polygon(12% 0,100% 0,85% 100%,0 100%);
+  z-index:1;
+}
+
+.medical-ad-image img{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:620px;
+  border-radius:8px;
+  object-fit:cover;
+  box-shadow:0 20px 40px rgba(0,0,0,.15);
+}
+
+.medical-ad-badge{
+  position:absolute;
+  top:25px;
+  left:55px;
+  z-index:3;
+  background:#111;
+  color:#fff;
+  padding:14px 22px;
+  border-left:5px solid #fff;
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:.5px;
+  max-width:260px;
+  animation:floatBadge 3s ease-in-out infinite;
+}
+
+.medical-ad-content{
+  animation:fadeRight 1s ease forwards;
+}
+
+.medical-ad-tag{
+  display:inline-block;
+  padding:10px 24px;
+  border-radius:40px;
+  background:#111;
+  color:#fff;
+  font-size:14px;
+  font-weight:700;
+  margin-bottom:25px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+}
+
+.medical-ad-content h2{
+  font-size:68px;
+  line-height:1.05;
+  color:#111;
+  font-weight:800;
+  margin-bottom:28px;
+}
+
+.medical-ad-content p{
+  color:#444;
+  font-size:21px;
+  line-height:1.9;
+  margin-bottom:40px;
+  max-width:650px;
+}
+
+.medical-ad-buttons{
+  display:flex;
+  gap:22px;
+  flex-wrap:wrap;
+}
+
+.medical-btn{
+  text-decoration:none;
+  padding:16px 34px;
+  font-size:16px;
+  font-weight:700;
+  border-radius:6px;
+  transition:.35s ease;
+}
+
+.primary-btn{
+  background:#ff1e1e;
+  color:#fff;
+}
+
+.primary-btn:hover{
+  background:#111;
+  transform:translateY(-4px);
+}
+
+.secondary-btn{
+  color:#111;
+  border-bottom:2px solid #ff1e1e;
+}
+
+.secondary-btn:hover{
+  color:#ff1e1e;
+  transform:translateX(8px);
+}
+
+@keyframes floatBadge{
+  0%,100%{
+    transform:translateY(0);
+  }
+  50%{
+    transform:translateY(-8px);
+  }
+}
+
+@keyframes fadeRight{
+  from{
+    opacity:0;
+    transform:translateX(60px);
+  }
+  to{
+    opacity:1;
+    transform:translateX(0);
+  }
+}
+
+@media(max-width:992px){
+  .medical-ad-container{
+    grid-template-columns:1fr;
+    gap:50px;
+  }
+
+  .medical-ad-content{
+    text-align:center;
+  }
+
+  .medical-ad-content p{
+    margin:auto auto 35px;
+  }
+
+  .medical-ad-buttons{
+    justify-content:center;
+  }
+
+  .medical-ad-content h2{
+    font-size:48px;
+  }
+}
+
+@media(max-width:768px){
+  .medical-ad-section{
+    padding:70px 15px;
+  }
+
+  .medical-ad-content h2{
+    font-size:38px;
+  }
+
+  .medical-ad-content p{
+    font-size:17px;
+  }
+
+  .medical-ad-shape{
+    left:10px;
+    width:92%;
+  }
+
+  .medical-ad-badge{
+    top:15px;
+    left:20px;
+    font-size:15px;
+    padding:12px 16px;
+  }
+
+  .medical-btn{
+    width:100%;
+    text-align:center;
+  }
+}
+</style>
+</body>
+</html>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #0b0e13;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        /* ================= MEDICAL FOOTER - RED THEME ================= */
+        #stackly-footer {
+            background: #0b0e13;
+            color: #ccc;
+            padding: 80px 20px 0;
+            width: 100%;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 40px;
+        }
+
+        /* Logo Image */
+        .footer-logo {
+            width: 180px;
+            height: auto;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* About text */
+        .footer-about p {
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        /* Social Icons - Red Theme */
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-social a {
+            width: 38px;
+            height: 38px;
+            background: #1a1f28;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: 0.3s;
+            text-decoration: none;
+            color: #ff3333;
+            font-size: 18px;
+        }
+
+        .footer-social a:hover {
+            background: #ff1e1e;
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        /* Headings with red underline */
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 35px;
+            height: 2px;
+            background: #ff1e1e;
+        }
+
+        /* Lists */
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .footer-col ul li a:hover {
+            color: #ff1e1e;
+            padding-left: 6px;
+        }
+
+        /* Contact Info */
+        .footer-contact p {
+            margin-bottom: 12px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-contact i {
+            color: #ff1e1e;
+            width: 20px;
+        }
+
+        /* Subscribe Form - Red Accent */
+        .subscribe-box {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .subscribe-box input {
+            padding: 12px;
+            border: none;
+            outline: none;
+            background: #1a1f28;
+            color: white;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .subscribe-box input::placeholder {
+            color: #888;
+        }
+
+        .subscribe-btn {
+            background: #ff1e1e;
+            padding: 12px;
+            border: none;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .subscribe-btn:hover {
+            background: #cc0000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 30, 30, 0.4);
+        }
+
+        /* Email Error */
+        .email-error {
+            color: #ff6b6b;
+            font-size: 12px;
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* Bottom Bar */
+        .footer-bottom {
+            text-align: center;
+            padding: 20px;
+            margin-top: 60px;
+            background: #080a0f;
+            color: #888;
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 35px;
+                text-align: left;
+            }
+            .footer-col {
+                text-align: left;
+            }
+            .footer-social {
+                justify-content: flex-start;
+            }
+            .footer-col h4::after {
+                left: 0;
+            }
+            .footer-contact p {
+                justify-content: flex-start;
+            }
+            .subscribe-box {
+                max-width: 100%;
+            }
+            .footer-logo {
+                margin-left: 0;
+                margin-right: auto;
+            }
+            .subscribe-btn {
+                width: 100%;
+            }
+            .footer-bottom {
+                text-align: left;
+                padding-left: 20px;
+            }
+        }
+
+        @media (min-width: 601px) and (max-width: 900px) {
+            .footer-col {
+                text-align: left;
+            }
+            .footer-social {
+                justify-content: flex-start;
+            }
+            .footer-contact p {
+                justify-content: flex-start;
+            }
+            .footer-bottom {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ================= MEDICAL SERVICES FOOTER - RED THEME WITH LOGO IMAGE ================= -->
+<footer id="stackly-footer">
+
+    <div class="footer-container">
+
+        <!-- COLUMN 1 : LOGO + ABOUT (Medical) -->
+        <div class="footer-col footer-about">
+            <!-- Actual logo image from original website -->
+            <img src="stacklylogo (1).webp" class="footer-logo" alt="Stackly Medical Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 200 60%27%3E%3Ctext x=%2710%27 y=%2740%27 fill=%27%23ff1e1e%27 font-size=%2728%27 font-weight=%27bold%27%3EStackly%3C/text%3E%3Ctext x=%27110%27 y=%2740%27 fill=%27white%27 font-size=%2720%27%3EMedical%3C/text%3E%3C/svg%3E'">
+            <p>
+                Stackly Medical delivers world-class healthcare with compassion and cutting-edge technology. 
+                We specialize in cardiology, neurology, orthopedics, and emergency care — putting patients first.
+            </p>
+            <div class="footer-social">
+                <a href="404.html" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="404.html" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="404.html" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="404.html" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+
+        <!-- QUICK LINKS -->
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="buyproduct.html">Buy Medicals</a></li>
+                  <li><a href="services.html">Services</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+              
+            </ul>
+        </div>
+
+        <!-- MEDICAL SERVICES -->
+        <div class="footer-col">
+            <h4>Medical Services</h4>
+            <ul>
+                <li><a href="404.html">Cardiology</a></li>
+                <li><a href="404.html">Neurology</a></li>
+                <li><a href="404.html">Orthopedics</a></li>
+                <li><a href="404.html">Pediatrics</a></li>
+                <li><a href="404.html">Emergency 24/7</a></li>
+                <li><a href="404.html">Telemedicine</a></li>
+                
+            </ul>
+        </div>
+
+        <!-- CONTACT + SUBSCRIBE -->
+        <div class="footer-col footer-contact">
+            <h4>Contact Us</h4>
+            <p><i class="fas fa-map-marker-alt"></i> 123 Medical Avenue, Health District, NY 10001</p>
+            <p><i class="fas fa-phone-alt"></i> +1 (800) 123-4567</p>
+            <p><i class="fas fa-envelope"></i> care@stacklymedical.com</p>
+            <p><i class="fas fa-clock"></i> 24/7 Emergency Support</p>
+
+            <form class="subscribe-box" id="subscribeForm">
+                <input type="email" id="emailInput" placeholder="Enter your email for health updates" required>
+                <button type="submit" class="subscribe-btn">Subscribe to Newsletter</button>
+                <small class="email-error" id="emailError"></small>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- BOTTOM BAR -->
+    <div class="footer-bottom">
+        © 2026 Stackly Medical. All Rights Reserved. | Compassionate Care, Advanced Technology.
+    </div>
+
+</footer>
+
+<script>
+    // ================= SCRIPT: EMAIL MANDATORY + REDIRECT TO 404.HTML =================
+    (function() {
+        const form = document.getElementById("subscribeForm");
+        const emailInput = document.getElementById("emailInput");
+        const errorSpan = document.getElementById("emailError");
+
+        // Helper to show error message
+        function showError(message) {
+            errorSpan.textContent = message;
+            errorSpan.style.color = "#ff6b6b";
+        }
+
+        function clearError() {
+            errorSpan.textContent = "";
+        }
+
+        // Real-time clear when user types
+        emailInput.addEventListener("input", function() {
+            clearError();
+        });
+
+        // Form submission handler
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();  // Stop normal form submission
+
+            const email = emailInput.value.trim();
+            // Basic email regex pattern
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            // Validation: empty or invalid email
+            if (email === "") {
+                showError("Email is required. Please enter your email address.");
+                emailInput.focus();
+                return;
+            }
+
+            if (!emailPattern.test(email)) {
+                showError("Please enter a valid email address (e.g., name@example.com).");
+                emailInput.focus();
+                return;
+            }
+
+            // If email is valid, redirect to 404.html
+            // You can change the redirect URL if needed
+            window.location.href = "404.html";
+        });
+    })();
+</script>
+
+
+</body>
+</html>
+

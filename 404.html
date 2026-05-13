@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 | Stackly Medical Services</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:linear-gradient(135deg,#050505,#121212);
+  color:#fff;
+  overflow:hidden;
+}
+
+#stacklyMedical404Page{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
+  padding:40px 20px;
+  position:relative;
+  overflow:hidden;
+}
+
+#stacklyMedical404Glow1,
+#stacklyMedical404Glow2{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(80px);
+  z-index:0;
+}
+
+#stacklyMedical404Glow1{
+  width:320px;
+  height:320px;
+  background:rgba(217,4,41,.22);
+  top:-80px;
+  left:-100px;
+}
+
+#stacklyMedical404Glow2{
+  width:260px;
+  height:260px;
+  background:rgba(255,255,255,.05);
+  bottom:-60px;
+  right:-60px;
+}
+
+#stacklyMedical404Content{
+  position:relative;
+  z-index:2;
+  max-width:760px;
+}
+
+#stacklyMedical404Number{
+  font-size:clamp(90px,15vw,180px);
+  font-weight:800;
+  letter-spacing:8px;
+  line-height:1;
+  margin-bottom:12px;
+  background:linear-gradient(135deg,#ff1f4b,#d90429);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  text-shadow:0 0 35px rgba(217,4,41,.45);
+  animation:stacklyMedicalPulse 2s infinite;
+}
+
+@keyframes stacklyMedicalPulse{
+  0%,100%{transform:scale(1);text-shadow:0 0 20px rgba(217,4,41,.35)}
+  50%{transform:scale(1.03);text-shadow:0 0 45px rgba(217,4,41,.65)}
+}
+
+#stacklyMedical404Title{
+  font-size:clamp(28px,5vw,46px);
+  font-weight:700;
+  margin-bottom:16px;
+}
+
+#stacklyMedical404Desc{
+  max-width:640px;
+  margin:0 auto 38px;
+  color:#c7c7c7;
+  line-height:1.8;
+  font-size:17px;
+}
+
+#stacklyMedical404Buttons{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  flex-wrap:wrap;
+}
+
+.stacklyMedical404Btn{
+  padding:16px 30px;
+  border-radius:50px;
+  font-size:15px;
+  font-weight:600;
+  text-decoration:none;
+  transition:.35s;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  min-width:190px;
+  justify-content:center;
+}
+
+#stacklyMedical404Home{
+  background:linear-gradient(135deg,#d90429,#ff3158);
+  color:#fff;
+  border:none;
+  box-shadow:0 12px 30px rgba(217,4,41,.35);
+}
+
+#stacklyMedical404Home:hover{
+  transform:translateY(-4px);
+  box-shadow:0 18px 35px rgba(217,4,41,.5);
+}
+
+#stacklyMedical404Back{
+  background:transparent;
+  border:2px solid rgba(255,255,255,.15);
+  color:#fff;
+}
+
+#stacklyMedical404Back:hover{
+  background:#fff;
+  color:#111;
+  transform:translateY(-4px);
+}
+
+#stacklyMedical404Doctor,
+#stacklyMedical404Cross,
+#stacklyMedical404Heart{
+  position:absolute;
+  z-index:1;
+  opacity:.08;
+}
+
+#stacklyMedical404Doctor{
+  top:10%;
+  left:5%;
+  font-size:120px;
+  color:#d90429;
+  animation:stacklyDoctorFloat 7s ease-in-out infinite;
+}
+
+#stacklyMedical404Cross{
+  bottom:12%;
+  left:8%;
+  font-size:90px;
+  color:#fff;
+  animation:stacklyCrossFloat 9s ease-in-out infinite;
+}
+
+#stacklyMedical404Heart{
+  top:20%;
+  right:8%;
+  font-size:100px;
+  color:#ff3158;
+  animation:stacklyHeartPulse 3s ease-in-out infinite;
+}
+
+@keyframes stacklyDoctorFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-18px) rotate(4deg)}
+}
+
+@keyframes stacklyCrossFloat{
+  0%,100%{transform:translateX(0)}
+  50%{transform:translateX(12px) translateY(-10px)}
+}
+
+@keyframes stacklyHeartPulse{
+  0%,100%{transform:scale(1);opacity:.08}
+  50%{transform:scale(1.15);opacity:.16}
+}
+
+#stacklyMedical404Info{
+  margin-top:26px;
+  color:#7e7e7e;
+  font-size:13px;
+}
+
+@media(max-width:600px){
+  #stacklyMedical404Buttons{
+    flex-direction:column;
+    width:100%;
+    max-width:280px;
+    margin:auto;
+  }
+
+  .stacklyMedical404Btn{
+    width:100%;
+  }
+
+  #stacklyMedical404Doctor,
+  #stacklyMedical404Cross,
+  #stacklyMedical404Heart{
+    display:none;
+  }
+
+  #stacklyMedical404Desc{
+    font-size:15px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="stacklyMedical404Page">
+
+  <div id="stacklyMedical404Glow1"></div>
+  <div id="stacklyMedical404Glow2"></div>
+
+  <div id="stacklyMedical404Doctor">
+    <i class="fa-solid fa-user-doctor"></i>
+  </div>
+
+  <div id="stacklyMedical404Cross">
+    <i class="fa-solid fa-briefcase-medical"></i>
+  </div>
+
+  <div id="stacklyMedical404Heart">
+    <i class="fa-solid fa-heart-pulse"></i>
+  </div>
+
+  <div id="stacklyMedical404Content">
+    <div id="stacklyMedical404Number">404</div>
+
+    <div id="stacklyMedical404Title">
+      Medical Page Not Found
+    </div>
+
+    <div id="stacklyMedical404Desc">
+      The medical service or page you are looking for is currently unavailable, moved, or no longer exists. Please return to the homepage or go back to the previous page.
+    </div>
+
+    <div id="stacklyMedical404Buttons">
+      <a href="index.html" class="stacklyMedical404Btn" id="stacklyMedical404Home">
+        <i class="fa-solid fa-house"></i>
+        Back To Home
+      </a>
+
+      <button class="stacklyMedical404Btn" id="stacklyMedical404Back" onclick="history.back()">
+        <i class="fa-solid fa-arrow-left"></i>
+        Previous Page
+      </button>
+    </div>
+
+    <div id="stacklyMedical404Info">
+      Need urgent support? Contact our 24/7 medical team.
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vitalis Health | Medical Login</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", -apple-system, system-ui, sans-serif;
+        }
+
+        :root {
+            --primary-red: #e31b23;
+            --primary-dark: #b01017;
+            --primary-light: #ff6a6a;
+            --dark-bg: #0a0c12;
+            --dark-card: #0f111a;
+            --dark-light: #1a1e2a;
+            --white: #ffffff;
+            --gray-light: #e0e0e0;
+            --gray-medium: #9e9e9e;
+            --border-light: #2a2a2a;
+            --success-green: #10b981;
+        }
+
+        .med-login-wrapper {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        /* Left Panel - Medical Image & Info */
+        .med-login-image-panel {
+            width: 50%;
+            background-image: linear-gradient(rgba(10, 12, 18, 0.85), rgba(227, 27, 35, 0.75)),
+                url('Gemini_Generated_Image_ck0hlock0hlock0h.webp');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .med-login-image-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(227, 27, 35, 0.15) 0px,
+                rgba(227, 27, 35, 0.15) 10px,
+                transparent 10px,
+                transparent 20px
+            );
+            pointer-events: none;
+        }
+
+        .med-login-logo {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -0.5px;
+        }
+
+        .med-login-logo span {
+            color: var(--primary-red);
+        }
+
+        .med-login-subtitle {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            font-weight: 500;
+        }
+
+        .med-login-heading {
+            font-size: 32px;
+            font-weight: 700;
+            max-width: 450px;
+            line-height: 1.4;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .med-login-features {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .med-login-feature {
+            text-align: center;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(8px);
+            padding: 12px 20px;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .med-login-feature i {
+            width: 28px;
+            height: 28px;
+            color: var(--primary-red);
+            margin-bottom: 6px;
+            display: inline-block;
+        }
+
+        .med-login-feature p {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Right Panel - Form */
+        .med-login-form-panel {
+            width: 50%;
+            background-color: var(--dark-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+
+        .med-login-form-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-red), var(--primary-light), var(--primary-red));
+        }
+
+        .med-login-form-container {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .med-login-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .med-login-header h1 {
+            font-size: 32px;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .med-login-header p {
+            color: var(--gray-medium);
+        }
+
+        .med-login-header a {
+            color: var(--primary-red) !important;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .med-login-header a:hover {
+            text-decoration: underline;
+        }
+
+        .med-login-form-group {
+            margin-bottom: 20px;
+        }
+
+        .med-login-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--white);
+        }
+
+        .med-login-input,
+        .med-login-select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--dark-light);
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
+            background-color: var(--dark-card);
+            color: var(--white);
+            transition: all 0.3s;
+        }
+
+        .med-login-input:focus,
+        .med-login-select:focus {
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(227, 27, 35, 0.2);
+        }
+
+        .med-login-input::placeholder {
+            color: var(--gray-medium);
+        }
+
+        .med-login-select option {
+            background-color: var(--dark-card);
+            color: var(--white);
+        }
+
+        .med-login-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            margin-bottom: 24px;
+            color: var(--gray-medium);
+        }
+
+        .med-login-meta label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .med-login-meta input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary-red);
+        }
+
+        .med-login-meta a {
+            color: var(--primary-red);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .med-login-meta a:hover {
+            text-decoration: underline;
+        }
+
+        .med-login-btn-submit {
+            position: relative;
+            width: 100%;
+            height: 54px;
+            background-color: var(--primary-red);
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            overflow: hidden;
+            z-index: 1;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .med-login-btn-submit::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background-color: var(--primary-dark);
+            z-index: -1;
+            transition: height 0.4s ease;
+        }
+
+        .med-login-btn-submit:hover::before {
+            height: 100%;
+        }
+
+        .med-login-btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(227, 27, 35, 0.4);
+            color: var(--white);
+        }
+
+        .med-login-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 30px 0;
+            color: var(--gray-medium);
+            font-size: 13px;
+        }
+
+        .med-login-divider::before,
+        .med-login-divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid var(--dark-light);
+        }
+
+        .med-login-divider:not(:empty)::before {
+            margin-right: 15px;
+        }
+
+        .med-login-divider:not(:empty)::after {
+            margin-left: 15px;
+        }
+
+        .med-login-social-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .med-login-social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            border: 2px solid var(--dark-light);
+            border-radius: 12px;
+            background: var(--dark-card);
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            gap: 10px;
+            color: var(--white);
+        }
+
+        .med-login-social-btn:hover {
+            background: var(--primary-red);
+            color: var(--dark-bg);
+            border-color: var(--primary-red);
+            transform: translateY(-2px);
+        }
+
+        .med-login-social-btn i {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ===== REDESIGNED BACK TO HOME BUTTON ===== */
+        /* New style: white outline, rounded-full, subtle glow, icon, and smooth hover */
+        .med-login-back-btn {
+            margin-top: 30px;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: auto;
+            font-size: 15px;
+            backdrop-filter: blur(4px);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 0 rgba(255,255,255,0);
+        }
+
+        .med-login-back-btn i {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.2s;
+        }
+
+        .med-login-back-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--white);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+        }
+
+        .med-login-back-btn:hover i {
+            transform: translateX(-4px);
+        }
+
+        /* For responsive, keep button centered */
+        @media (max-width: 992px) {
+            .med-login-wrapper {
+                flex-direction: column;
+            }
+            .med-login-image-panel {
+                width: 100%;
+                min-height: 350px;
+                padding: 30px 20px;
+            }
+            .med-login-form-panel {
+                width: 100%;
+                padding: 40px 20px;
+            }
+            .med-login-features {
+                gap: 15px;
+            }
+            .med-login-heading {
+                font-size: 24px;
+            }
+            .med-login-back-btn {
+                margin-top: 25px;
+                padding: 10px 24px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .med-login-social-grid {
+                grid-template-columns: 1fr;
+            }
+            .med-login-logo {
+                font-size: 36px;
+            }
+            .med-login-subtitle {
+                font-size: 16px;
+            }
+            .med-login-back-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="med-login-wrapper">
+        <!-- Left Panel: Medical Imagery & Information -->
+        <section class="med-login-image-panel">
+            <div class="med-login-logo">VITALIS<span>HEALTH</span></div>
+            <div class="med-login-subtitle">Compassionate Care, Advanced Medicine</div>
+            <h2 class="med-login-heading">
+                Your trusted partner in healthcare. Experience personalized medical services with cutting-edge technology.
+            </h2>
+            
+            <div class="med-login-features">
+                <div class="med-login-feature">
+                    <i data-lucide="heart-pulse"></i>
+                    <p>24/7 Emergency</p>
+                </div>
+                <div class="med-login-feature">
+                    <i data-lucide="stethoscope"></i>
+                    <p>Expert Doctors</p>
+                </div>
+                <div class="med-login-feature">
+                    <i data-lucide="syringe"></i>
+                    <p>Modern Treatment</p>
+                </div>
+            </div>
+            
+            <!-- Redesigned Back to Home Button -->
+            <button type="button" class="med-login-back-btn" onclick="window.location.href = 'index.html'">
+                <i data-lucide="home"></i> Back to Home
+            </button>
+        </section>
+
+        <!-- Right Panel: Login Form -->
+        <section class="med-login-form-panel">
+            <div class="med-login-form-container">
+                <div class="med-login-header">
+                    <h1>Welcome Back</h1>
+                    <p>
+                        Don't have an account?
+                        <a href="getstarted.html">Sign Up</a>
+                    </p>
+                </div>
+
+                <form id="med-login-form">
+                    <div class="med-login-form-group">
+                        <label class="med-login-label">Login as</label>
+                        <select class="med-login-select" id="role" required>
+                            <option value="Doctor">Doctor / Specialist</option>
+                            <option value="Patient" selected>Patient</option>
+                        </select>
+                    </div>
+                    
+                    <div class="med-login-form-group">
+                        <label class="med-login-label">Email Address</label>
+                        <input
+                            type="email"
+                            class="med-login-input"
+                            id="email"
+                            placeholder="Enter your registered email"
+                            autocomplete="off"
+                            required
+                        />
+                    </div>
+                    
+                    <div class="med-login-form-group">
+                        <label class="med-login-label">Password</label>
+                        <input
+                            type="password"
+                            class="med-login-input"
+                            id="password"
+                            placeholder="Enter your password"
+                            autocomplete="new-password"
+                            required
+                        />
+                    </div>
+
+                    <div class="med-login-meta">
+                        <label>
+                            <input type="checkbox" /> Remember me
+                        </label>
+                        <a href="404.html">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="med-login-btn-submit">
+                        SIGN IN
+                    </button>
+
+                    <div class="med-login-divider">Or continue with</div>
+                    
+                    <div class="med-login-social-grid">
+                        <button type="button" class="med-login-social-btn" onclick="window.location.href = '404.html'">
+                            <i data-lucide="facebook"></i> Facebook
+                        </button>
+                        <button type="button" class="med-login-social-btn" onclick="window.location.href = '404.html'">
+                            <i data-lucide="chrome"></i> Google
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        
+        document.getElementById("med-login-form").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = document.getElementById("email").value;
+            const role = document.getElementById("role").value;
+
+            // Store user data for dashboard access
+            const userData = {
+                name: role === "Doctor" ? "Dr. " + email.split('@')[0] : email.split('@')[0],
+                email: email,
+                role: role,
+                loginTime: new Date().toISOString()
+            };
+
+            localStorage.setItem("vitalis_user", JSON.stringify(userData));
+
+            // Redirect based on role - update these URLs to your actual dashboard pages
+            if (role === "Doctor") {
+                window.location.href = "doctor.html";
+            } else {
+                window.location.href = "patient.html";
+            }
+        });
+        
+        window.onload = () => {
+            document.getElementById("med-login-form").reset();
+        };
+    </script>
+</body>
+</html>
